@@ -86,7 +86,7 @@
         <div class="glass rounded-2xl bg-slate-900/70 border border-slate-700/60 p-6 shadow-lg shadow-slate-900/40">
           <div class="flex items-center justify-between">
             <div class="text-sm font-medium text-slate-300">BTC / USD</div>
-            <span class="text-[10px] font-mono text-slate-600">COINDESK</span>
+            <span class="text-[10px] font-mono text-slate-600">COINGECKO</span>
           </div>
           <div class="mt-4 text-4xl font-black font-mono tabular-nums" id="btcusd">–––</div>
           <div class="mt-3 flex items-center gap-2">
@@ -131,8 +131,8 @@
 
   <script>
     // ── Live prices ────────────────────────────────────────────────────────────
-    const JPY_URL  = 'https://api.frankfurter.app/latest?from=USD&to=JPY';
-    const BTC_URL  = 'https://api.coindesk.com/v1/bpi/currentprice.json';
+    const JPY_URL  = 'https://api.frankfurter.dev/v1/latest?from=USD&to=JPY';
+    const BTC_URL  = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
     let lastUpdated = '';
 
     function fmt(n, dec) { return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec}); }
@@ -162,9 +162,9 @@
         const r = await fetch(BTC_URL);
         if (!r.ok) throw new Error('HTTP ' + r.status);
         const d = await r.json();
-        const v = d.bpi.USD.rate_float;
+        const v = d.bitcoin.usd;
         el.textContent = '$ ' + fmt(v, 2);
-        st.textContent = 'CoinDesk BPI · updated ' + d.time.updated.slice(0,25);
+        st.textContent = 'CoinGecko · live price';
         st.className = 'text-xs text-emerald-400/80 status';
       } catch (e) {
         el.textContent = '— — —';
